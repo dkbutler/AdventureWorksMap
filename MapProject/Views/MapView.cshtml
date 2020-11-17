@@ -1,0 +1,61 @@
+@model MapProject.Models.MapViewModel
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width" />
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+  <script src="~/lib/jquery/dist/jquery.js"></script>
+  <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+  <link rel="stylesheet" href="~/css/site.css">
+
+
+</head>
+<body>
+  <div class="row" id="banner">
+    <img src="~/Images/ADVENTUREWORKS_LOGO.png" width="300" height="150" alt="">
+  </div>
+
+  <p style="color: red;">API transactions limited to 10 for testing</p>
+
+  <div class="format">
+
+    <nav class="left_nav">
+      <div id="ALL" class="nav_link">
+        @Html.ActionLink("All -" + (int)Model.Allcount, "GetMapPage", "Map", new { filter = "ALL" })
+      </div>
+      <div id="IN" class="nav_link">
+        @Html.ActionLink("Customers - " + (int)Model.INcount, "GetMapPage", "Map", new { filter = "IN" })
+      </div>
+      <div id="EM" class="nav_link">
+        @Html.ActionLink("Employees (Non-Sales) - " + (int)Model.EMcount, "GetMapPage", "Map", new { filter = "EM" })
+      </div>
+      <div id="SP" class="nav_link">
+        @Html.ActionLink("Sales Person - " + (int)Model.SPcount, "GetMapPage", "Map", new { filter = "SP" })
+      </div>
+      <div id="STORE" class="nav_link">
+        @Html.ActionLink("Store - " + (int)Model.STOREcount, "GetMapPage", "Map", new { filter = "STORE" })
+      </div>
+    </nav>
+
+    <div class="map-deet">
+      @{
+        await Html.RenderPartialAsync("_mapPartialView");
+      }
+    </div>
+
+  </div>
+
+
+  <div>
+    @{
+      await Html.RenderPartialAsync("_AddressListPartial");
+    }
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,98 @@
+@model MapProject.Models.MapViewModel
+
+
+<div class="container-fluid">
+
+  <table id="address" class="table">
+
+    <thead>
+      <tr>
+        <th> PersonType</th>
+        <th> Lat</th>
+        <th> Long</th>
+        <th >Name</th>
+        <th >Street</th>
+        <th >City</th>
+        <th >State/Region</th>
+      </tr>
+    </thead>
+
+    <tbody>
+
+      @if (Model.Addresses != null)
+      {
+        @foreach (var address in Model.Addresses)
+        {
+          <tr>
+            <td> @address.personType</td>
+            <td> @address.Lat</td>
+            <td> @address.Long</td>
+            <td> @address.name</td>
+            <td> @address.street</td>
+            <td> @address.city</td>
+            <td> @address.state</td>
+          </tr>
+        }
+      }
+    </tbody>
+
+  </table>
+
+</div>
+
+
+<script src="~/js/site.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.22/datatables.min.css" />
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.22/datatables.min.js"></script>
+
+<script>
+
+  $(document).ready(function () {
+
+    
+    $('#address').DataTable({
+
+      "columnDefs": [
+        {
+          "targets": [0],
+          "visible": false,
+          "searchable": false
+        },
+        {
+          "targets": [1],
+          "visible": false,
+          "searchable": false
+        },
+        {
+          "targets": [2],
+          "visible": false,
+          "searchable": false
+        }],
+
+      "pagingType": "full_numbers"
+    });
+
+    var table = $('#address').DataTable();
+
+    $('#address tbody').on('click', 'tr', function () {
+
+      $('#address tbody > tr').removeClass('selected');
+      $(this).addClass('selected');
+
+      var rowData = table.row(this).data();
+
+      let markers = [{
+        personType: rowData[0], Lat: rowData[1], Long: rowData[2],
+        name: rowData[3], street: rowData[4]
+      }]
+
+      getMap(markers);
+
+
+    });
+
+
+  });
+
+</script>
+
